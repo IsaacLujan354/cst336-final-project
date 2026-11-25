@@ -68,19 +68,46 @@ app.get('/newUser', (req, res) => {
 })
 
 app.post('/createUser', async (req, res) => {
-    let username = req.body.username;
+    let username = req.body.username.trim();
     let password = req.body.password;
+    let confirmPassword = req.body.confirmPassword;
 
-    let createUserSql = 'INSERT INTO Account_Information (`User Name`, Password) VALUES (?, ?)';
-    
-    let hashedPassword = await bcrypt.hash(password, 10);
+    // Check for empty fields
+    if (!username || !password || !confirmPassword) {
+        return res.render('newUser.ejs', {
+            error: 'All fields are required'
+        });
+    }
 
-    let params = [username, hashedPassword];
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        return res.render('newUser.ejs', {
+            error: 'Passwords do not match'
+        });
+    }
 
-    const [rows] = await pool.query(createUserSql, params);
+    try {
+        let createUserSql = 'INSERT INTO Account_Information (`User Name`, Password) VALUES (?, ?)';
 
-    res.redirect('/login');
+        let hashedPassword = await bcrypt.hash(password, 10);
+        let params = [username, hashedPassword];
 
+        await pool.query(createUserSql, params);
+
+        res.redirect('/login');
+
+    } catch (err) {
+        // Check for multiple username entries
+        if (err.code === 'ER_DUP_ENTRY') {
+            return res.render('newUser.ejs', {
+                error: 'Username already exists'
+            });
+        }
+        console.error(err);
+        res.status(500).render('newUser.ejs', {
+            error: 'Unable to create account'
+        });
+    }
 });
 
 app.get('/recipeList', isUserAuthenticated, async (req, res) => {

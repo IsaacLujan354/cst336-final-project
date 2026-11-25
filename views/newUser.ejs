@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Create User</title>
 </head>
 <body>
     <h1>Create User</h1>
+
+    <% if (typeof error !== 'undefined') { %>
+        <p style="color: red;"><%= error %></p>
+    <% } %>
+
     <form action="/createUser" method="post">
         <label for="username-input">Username</label>
-        <input id="username-input" name="username">
+        <input id="username-input" name="username" required>
         <br/>
         <label for="password-input">Password</label>
-        <input id="password-input" name="password">
+        <input type="password" id="password-input" name="password" required>
+        <br/>
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirmPassword" required>
+        <br/>
 
         <button>Create User</button>
-        
     </form>
     
+    <a href="/login">Back to Login</a>
 </body>
 </html>
