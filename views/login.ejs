@@ -7,12 +7,15 @@
 </head>
 <body>
     <h1>Login</h1>
+    <% if (typeof error !== 'undefined') { %>
+    <p style="color: red;"><%= error %></p>
+    <% } %>
     <form action="/login" method="post">
         <label for="username-input">Username</label>
-        <input id="username-input" name="username">
+        <input id="username-input" name="username" required>
         <br/>
         <label for="password-input">Password</label>
-        <input id="password-input" name="password">
+        <input type="password" id="password-input" name="password" required>
 
         <button>Login</button>
         

@@ -57,7 +57,7 @@ app.post('/login', async (req, res) => {
         req.session.role = 'admin';
         req.session.username = username;
         
-        res.render('home.ejs');
+        res.redirect('/');
     } else {
         res.render('login.ejs', { error: 'Invalid username or password' });
     }
