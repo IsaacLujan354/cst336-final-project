@@ -54,7 +54,7 @@ app.post('/login', async (req, res) => {
     if (rows.length > 0 && await bcrypt.compare(password, rows[0].Password)) {
         
         req.session.authenticated = true;
-        req.session.role = 'admin';
+        req.session.userID = username;
         req.session.username = username;
         
         res.redirect('/');
