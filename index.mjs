@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import session from 'express-session';
 
 const app = express();
+app.set('json spaces', 2);
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -54,7 +55,7 @@ app.post('/login', async (req, res) => {
     if (rows.length > 0 && await bcrypt.compare(password, rows[0].Password)) {
         
         req.session.authenticated = true;
-        req.session.userID = username;
+        req.session.userID = rows[0]['User ID'];
         req.session.username = username;
         
         res.redirect('/');
@@ -118,6 +119,58 @@ app.get('/recipeList', isUserAuthenticated, async (req, res) => {
     
     res.render('recipe.ejs', {recipes: rows});
 })
+app.get('/api/recipes', isUserAuthenticated, async (req, res) => {
+
+    let search = req.query.search || '';
+
+    try {
+        let url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(search)}`;
+
+        let response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error('API request failed');
+        }
+
+        let data = await response.json();
+
+        let recipes = (data.meals || []).map(meal => {
+    let ingredients = [];
+
+    for (let i = 1; i <= 20; i++) {
+        let ingredient = meal[`strIngredient${i}`];
+        let measure = meal[`strMeasure${i}`];
+
+        if (ingredient && ingredient.trim()) {
+            ingredients.push({
+                name: ingredient.trim(),
+                measure: measure ? measure.trim() : ''
+            });
+        }
+    }
+
+    return {
+        id: meal.idMeal,
+        name: meal.strMeal,
+        category: meal.strCategory,
+        area: meal.strArea,
+        image: meal.strMealThumb,
+        instructions: meal.strInstructions,
+        ingredients: ingredients
+    };
+});
+
+res.json(recipes);
+
+    } catch (err) {
+        console.error('TheMealDB API error:', err);
+
+        res.status(500).json({
+            error: 'Unable to retrieve recipes'
+        });
+    }
+});
+
 
 app.get('/logout', isUserAuthenticated, (req, res) => {
 
