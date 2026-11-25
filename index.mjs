@@ -119,14 +119,18 @@ app.get('/recipeList', isUserAuthenticated, async (req, res) => {
     res.render('recipe.ejs', {recipes: rows});
 })
 
-app.get('/logout', isUserAuthenticated, async (req, res) => {
-    // Destroy the session and redirect to login page
+app.get('/logout', isUserAuthenticated, (req, res) => {
 
-    req.session.destroy(callback => {
-        // callback is what happens after the session is destroyed
+    req.session.destroy(err => {
+
+        if (err) {
+            return res.status(500).send('Unable to log out');
+        }
+
+        res.clearCookie('connect.sid');
         res.redirect('/login');
     });
-})
+});
 
 app.get("/dbTest", async(req, res) => {
   try {
