@@ -160,6 +160,38 @@ app.get('/api/recipes', isUserAuthenticated, async (req, res) => {
     };
 });
 
+app.get('/api/recipes/:id', isUserAuthenticated, async (req, res) => {
+
+    let id = req.params.id;
+
+    try {
+        let url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${encodeURIComponent(id)}`;
+
+        let response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error('API request failed');
+        }
+
+        let data = await response.json();
+
+        if (!data.meals || data.meals.length === 0) {
+            return res.status(404).json({
+                error: 'Recipe not found'
+            });
+        }
+
+        res.json(data.meals[0]);
+
+    } catch (err) {
+        console.error(err);
+
+        res.status(500).json({
+            error: 'Unable to retrieve recipe'
+        });
+    }
+});
+
 res.json(recipes);
 
     } catch (err) {
