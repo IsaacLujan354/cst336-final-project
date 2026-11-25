@@ -1,0 +1,168 @@
+<CodeBlock language="html" editable>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend API Test</title>
+
+
+<style>
+body {
+font-family: Arial, sans-serif;
+max-width: 1000px;
+margin: 40px auto;
+padding: 20px;
+}
+
+select, input, button {
+padding: 10px;
+margin: 5px;
+}
+
+pre {
+background-color: #f2f2f2;
+padding: 20px;
+white-space: pre-wrap;
+overflow-wrap: anywhere;
+border-radius: 5px;
+}
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>Recipe Backend Test</h1>
+
+<p>Development page for testing our API endpoints.</p>
+
+<a href="/">Home</a>
+<a href="/logout">Logout</a>
+
+<hr>
+
+<label for="endpoint">Endpoint:</label>
+
+<select id="endpoint">
+
+<option value="/api/recipes?search=">
+Search Recipes
+</option>
+
+<option value="/api/recipes/category?category=">
+Filter by Category
+</option>
+
+<option value="/api/recipes/ingredient?ingredient=">
+Filter by Ingredient
+</option>
+
+<option value="/api/recipes/area?area=">
+Filter by Region
+</option>
+
+<option value="/api/recipes/">
+Recipe ID
+</option>
+
+<option value="/api/recipes/random">
+Random Recipe
+</option>
+
+<option value="/api/categories">
+Available Categories
+</option>
+
+<option value="/api/ingredients">
+Available Ingredients
+</option>
+
+<option value="/api/areas">
+Available Regions
+</option>
+
+<option value="/api/local-recipes?search=">
+Search Local Database
+</option>
+
+<option value="/api/me">
+Current User
+</option>
+
+</select>
+
+<form id="test">
+
+<label for="term">Search Term / ID:</label>
+
+<input id="term" value="chicken">
+
+<button type="submit">Run Test</button>
+
+</form>
+
+<p id="status" role="status"></p>
+
+<pre id="result"></pre>
+
+<script>
+
+const endpoint = document.getElementById('endpoint');
+const term = document.getElementById('term');
+const status = document.getElementById('status');
+const result = document.getElementById('result');
+
+function needsTerm() {
+
+return endpoint.value.endsWith('=') ||
+endpoint.value.endsWith('/');
+}
+
+endpoint.addEventListener('change', () => {
+
+term.disabled = !needsTerm();
+});
+
+document.getElementById('test').addEventListener('submit', async event => {
+
+event.preventDefault();
+
+let url = endpoint.value;
+
+if (needsTerm()) {
+
+url += encodeURIComponent(term.value.trim());
+}
+
+status.textContent = 'Loading ' + url;
+
+result.textContent = '';
+
+try {
+
+let response = await fetch(url, {
+headers: {
+Accept: 'application/json'
+}
+});
+
+status.textContent = 'HTTP ' + response.status + ' - ' + url;
+
+let data = await response.json();
+
+result.textContent = JSON.stringify(data, null, 2);
+
+} catch (err) {
+
+status.textContent = 'Request failed: ' + err.message;
+}
+});
+
+</script>
+
+</body>
+</html>
+</CodeBlock>
