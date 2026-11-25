@@ -98,7 +98,7 @@ app.post('/login', async (req, res) => {
         });
 
         req.session.authenticated = true;
-        req.session.userID = rows[0]['User ID'];
+        req.session.userID = rows[0]['User Id'];
         req.session.username = rows[0]['User Name'];
 
         // Save session before redirecting
