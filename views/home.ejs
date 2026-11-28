@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-</head>
-<body>
-    <a href="/recipeList">Recipe List</a>
 
-    <button id="logoutBtn">Log Out</button>
+    <%- include('partials/includes.ejs') %>
+</head>
+
+<body>
+    <div class="main">
+
+        <header>
+            <%- include('partials/navbar.ejs') %>
+        </header>
+
+        <button id="logoutBtn">Log Out</button>
+
+    </div>
 </body>
+
 </html>
