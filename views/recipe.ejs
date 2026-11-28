@@ -10,19 +10,24 @@
 </head>
 
 <body>
+    <header>
+        <%- include('partials/navbar.ejs') %>
+    </header>
+
     <div class="main">
 
-        <header>
-            <%- include('partials/navbar.ejs') %>
-        </header>
-
         <!-- loop through the recipes and print them out -->
-        <h1>Recipe List</h1>
+        <h1 id="recipeList">Recipe List:</h1>
+
         <% for (let recipe of recipes) { %>
-            <p>
-                <%= recipe[`Recipe Name`] %>
-            </p>
-            <% } %>
+            <div class="recipeSummary">
+                <h2>
+                    <%= recipe[`Recipe Name`] %> (Will turn into a link)
+                </h2>
+
+                <div id="imagePlaceholder">Image will go here</div>
+            </div>
+        <% } %>
 
     </div>
 </body>

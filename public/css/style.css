@@ -54,3 +54,13 @@ body {
     align-items: center;
     width: 33%;
 }
+
+#recipeList {
+    text-decoration: underline;
+}
+
+.recipeSummary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

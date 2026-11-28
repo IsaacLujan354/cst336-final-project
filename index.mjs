@@ -31,7 +31,7 @@ app.use(session({
 
 //routes
 app.get('/', isUserAuthenticated, (req, res) => {
-  res.render('home.ejs');
+    res.render('home.ejs');
 });
 
 // Login routes
