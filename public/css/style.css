@@ -64,3 +64,48 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
+#recipeInput {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+#nonIngredientBox {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    width: 40%;
+}
+
+#instructionsInput {
+    width: 600px;
+}
+
+#ingredientBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    border-left: 2px solid black;
+}
+
+.ingredientAndMeasurement {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding-bottom: 20px;
+}
+
+.ingredientInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.measurementInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

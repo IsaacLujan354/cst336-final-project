@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,66 @@
 
     <%- include('partials/includes.ejs') %>
 </head>
+
 <body>
+    <header>
+        <%- include('partials/navbar.ejs') %>
+    </header>
+
     <div class="main">
-        
-        <header>
-            <%- include('partials/navbar.ejs') %>
-        </header>
+
+        <h1>Post A Recipe</h1>
+
+        <div id="recipeInput">
+
+            <div id="nonIngredientBox">
+
+                <div id="recipeName">
+                    <label for="nameInput">Name of Recipe:</label>
+                    <input id="nameInput" name="nameInput">
+                </div>
+
+                <div id="imageUrl">
+                    <label for="imageUrlInput">Image URL:</label>
+                    <input id="imageUrlInput" name="imageUrlInput">
+                </div>
+
+                <div id="category">
+                    <label for="categoryInput">Category:</label>
+                    <select id="categoryInput" name="categoryInput">
+                        <option>Category will go here</option>
+                    </select>
+                </div>
+
+                <div id="instructions">
+                    <label for="instructionsInput">Instructions:</label>
+                    <input id="instructionsInput" name="instructionsInput">
+                </div>
+            </div>
+
+            <div id="ingredientBox">
+
+                <div class="ingredientAndMeasurement">
+
+                    <div class="ingredientInput">
+                        <p>Ingredient 1:</p>
+                        <input class="ingredient" name="ingredient">
+                    </div>
+
+                    <div class="measurementInput">
+                        <p>Measurement:</p>
+                        <input class="measurement" name="measurement">
+                    </div>
+                    
+                </div>
+
+                <!-- Button will add another ingredientAndMeasurement div -->
+                <button id="addIngredient">Add Ingredient</button>
+            </div>
+        </div>
 
     </div>
-    
+
 </body>
+
 </html>
