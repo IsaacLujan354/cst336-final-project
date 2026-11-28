@@ -34,6 +34,8 @@ app.get('/', isUserAuthenticated, (req, res) => {
   res.render('home.ejs');
 });
 
+// Login routes
+
 app.get('/login', (req, res) => {
   res.render('login.ejs');
 });
@@ -63,6 +65,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
+// New user routes
+
 app.get('/newUser', (req, res) => {
     res.render('newUser.ejs');
 })
@@ -83,6 +87,8 @@ app.post('/createUser', async (req, res) => {
 
 });
 
+// Recipe routes
+
 app.get('/recipeList', isUserAuthenticated, async (req, res) => {
     
     let query = 'SELECT * FROM Recipes';
@@ -91,6 +97,12 @@ app.get('/recipeList', isUserAuthenticated, async (req, res) => {
     
     res.render('recipe.ejs', {recipes: rows});
 })
+
+app.get('/newRecipe', isUserAuthenticated, async (req, res) => {
+    res.render('newRecipe.ejs');
+})
+
+// Logout route
 
 app.get('/logout', isUserAuthenticated, async (req, res) => {
     // Destroy the session and redirect to login page
