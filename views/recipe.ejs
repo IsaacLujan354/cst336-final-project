@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <%- include('partials/includes.ejs') %>
 </head>
+
 <body>
-    <!-- loop through the quotes and print them out -->
-    <h1>Recipe List</h1>
-    <% for (let recipe of recipes) { %>
-        <p><%= recipe[`Recipe Name`] %></p>
-    <% } %>
+    <header>
+        <%- include('partials/navbar.ejs') %>
+    </header>
+
+    <div class="main">
+
+        <!-- loop through the recipes and print them out -->
+        <h1 id="recipeList">Recipe List:</h1>
+
+        <% for (let recipe of recipes) { %>
+            <div class="recipeSummary">
+                <h2>
+                    <%= recipe[`Recipe Name`] %> (Will turn into a link)
+                </h2>
+
+                <div id="imagePlaceholder">Image will go here</div>
+            </div>
+        <% } %>
+
+    </div>
 </body>
+
 </html>
