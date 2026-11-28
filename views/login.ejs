@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <h1>Login</h1>
-    <form action="/login" method="post">
-        <label for="username-input">Username</label>
-        <input id="username-input" name="username">
-        <br/>
-        <label for="password-input">Password</label>
-        <input id="password-input" name="password">
 
-        <button>Login</button>
-        
-    </form>
+<body>
+    <div class="main">
+
+        <h1>Login</h1>
+        <form action="/login" method="post">
+
+            <div class="loginInfoBox">
+                <div class="usernameBox">
+                    <label for="username-input">Username</label>
+                    <input id="username-input" name="username">
+                </div>
+
+                <div class="passwordBox">
+                    <label for="password-input">Password</label>
+                    <input id="password-input" name="password">
+                </div>
+
+                <button>Login</button>
+            </div>
+
+        </form>
+
+    </div>
 </body>
+
 </html>
